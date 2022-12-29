@@ -45,35 +45,35 @@ void* t3(){
 	c2 = 31;
 	sem_post(sem[3]);
 	sem_wait(sem[0]);
-    sem_wait(sem[1]);
+    	sem_wait(sem[1]);
 	z = a2 + b1;
-    sem_post(sem[6]);
+    	sem_post(sem[6]);
 }
 
 int main(){
 	int i = 0;
     
-    for(i=0; i<7; i++){
-    	sem[i] = sem_open("/SEM_NAME"+i, O_CREAT, 0644, 0);
+    	for(i=0; i<7; i++){
+    		sem[i] = sem_open("/SEM_NAME"+i, O_CREAT, 0644, 0);
 	}
     
-    if(pthread_create(&thread_id[0], NULL, t1, NULL)<0){
-    	printf("Thread failed\n");
+    	if(pthread_create(&thread_id[0], NULL, t1, NULL)<0){
+    		printf("Thread failed\n");
 	}
 	if(pthread_create(&thread_id[1], NULL, t2, NULL)<0){
-    	printf("Thread failed\n");
+    		printf("Thread failed\n");
 	}
 	
-    if(pthread_create(&thread_id[2], NULL, t3, NULL)<0){
-    	printf("Thread failed\n");
+    	if(pthread_create(&thread_id[2], NULL, t3, NULL)<0){
+    		printf("Thread failed\n");
 	}
 	
-    pthread_join(thread_id[0], NULL);
-    pthread_join(thread_id[1], NULL);
-    pthread_join(thread_id[2], NULL);
+	pthread_join(thread_id[0], NULL);
+	pthread_join(thread_id[1], NULL);
+	pthread_join(thread_id[2], NULL);
 	
 	for(i=0; i<7; i++){
-    	sem_unlink("/SEM_NAME"+i);
+    		sem_unlink("/SEM_NAME"+i);
 	}
 	
 	return 0;
